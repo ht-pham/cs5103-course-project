@@ -27,3 +27,15 @@
   <br>
 </div>
 
+<div>
+  <b>Timeline/Logs of the project</b>
+  <br>Mar 4th, 2022<br>
+  The DateTimeWizard class is built with basic attributes: 
+  <ol>
+<li> String[] timeFormat = {"AM","PM","24HR"} for easy modification on time display & String timeDisplay is for the selected time format to be display with a default value as "24HR"; </li>
+<li> Integer variables for date,month,year,hour,min; </li>
+<li> private Calendar datetime //This attribute is for future use of default Java functions in Calendar class.</li>
+<li> private TimeZone timezone = TimeZone.getTimeZone("CST"); //Similar to the previous attribute, it is for future usage & default timezone value is Central time</li>
+  </ol>
+The main class temporarily display the midterm check point date only. 
+</div>
