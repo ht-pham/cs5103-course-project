@@ -57,5 +57,14 @@ public class DateTimeWizard {
         today.setDate(17,3,2022);
         today.setTime(11,59,1);
         System.out.println(today.returnDate());
+        
+        //This is for user input when the project is run in terminal
+        //Command: java $PATH/DateTimeWizard.java [Date] [HourAM/PM/24H] [TimeZone]
+        //Current expected result: User's orignal input 
+        if (args.length>0){
+            for (String s: args) {
+                System.out.print(s+"\t");
+            }
+        }
     }
 }
