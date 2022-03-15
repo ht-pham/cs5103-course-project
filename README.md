@@ -23,7 +23,7 @@
 <div>
   <b>Requirements</b>
   <br>
-  The initial requirement is to transform it to any different time zone.
+  The initial requirement is to transform it to any different time zone. The secondary requirement is to enable/disable Daylight Time Savings for all regions with an assumption that all regions start and end Daylight Time Savings. 
   <br>
 </div>
 
@@ -35,7 +35,7 @@
 <li> String[] timeFormat = {"AM","PM","24HR"} for easy modification on time display & String timeDisplay is for the selected time format to be display with a default value as "24HR"; </li>
 <li> Integer variables for date,month,year,hour,min; </li>
 <li> private Calendar datetime //This attribute is for future use of default Java functions in Calendar class.</li>
-<li> private TimeZone timezone = TimeZone.getTimeZone("CST"); //Similar to the previous attribute, it is for future usage & default timezone value is Central time</li>
+<li> private TimeZone timezone = TimeZone.getTimeZone("GMT-6:00"); //Similar to the previous attribute, it is for future usage & default timezone value is Central time</li>
   </ol>
 The main class temporarily display the midterm check point date only. 
 </div>
