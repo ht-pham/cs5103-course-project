@@ -37,6 +37,8 @@
     <li> private Calendar datetime //This attribute is for future use of default Java functions in Calendar class.</li>
     <li> private TimeZone timezone = TimeZone.getTimeZone("GMT-6:00"); //Similar to the previous attribute, it is for future usage & default timezone value is Central time</li>
   </ol>
+  <i>Mar 9th, 2022</i>
+  <p>The project is now enabled to change to a different time zone with newly added function setTimeZone(currentTimeZoneID,numberOfChangedHours,toTheEastSide) where currentTimeZoneID indicates current time zone, numberOfChangedHours means the number of different hours compared to the current time zone (e.g. Central Time Zone is 2 hours ahead from Pacific Time Zone), the boolean toTheEastSide helps the indication whether to increase or decrease the hour according to the East/West side related to the current location. This setTimeZone function is to change the time zone to a new one according to the new hour calculated via params numberOfChangedHours and toTheEastSide as well as the GMT+hour or GMT-hour.</p>
   <i>Mar 16th, 2022</i>
   <p>The date time display is now updated with 3 different options for date as well as 3 options for time (hour:min). This means, the program has 6 variations of date time display.</p>
   <ol>
