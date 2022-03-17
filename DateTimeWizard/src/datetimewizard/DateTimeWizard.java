@@ -16,7 +16,7 @@ public class DateTimeWizard {
     private String timeDisplay = timeFormat[2];
     private int date,month,year,hour,min;
     private Calendar datetime;
-    private TimeZone timezone = TimeZone.getTimeZone("CST");//default
+    private TimeZone timezone = TimeZone.getTimeZone("GMT-6");//default
     //Stuct
     public DateTimeWizard(){
         //the current date at the default timezone
@@ -89,7 +89,7 @@ public class DateTimeWizard {
                             +" "+dueDate.timezone.getDisplayName());
 
         //Convert the deadline as on Eastern Time Zone
-        dueDate.setTimeZone(dueDate.timezone,1,true);
+        dueDate.setTimeZone(dueDate.timezone,3,true);
         System.out.println("New timezone: "+dueDate.timezone.getDisplayName());
         dueDate.setDate(18,3,2022);
         dueDate.setTime(0,59,0);
