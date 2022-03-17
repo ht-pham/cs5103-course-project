@@ -111,23 +111,39 @@ public class DateTimeWizard {
         return dateNumber;
     }
     
-    public String returnDate(boolean isDefault){
-        String defaultDateFormat = this.month+"/"+this.day+"/"+this.year;
-        String defaultTimeFormat ;
-        if (this.timeDisplay.matches(timeFormat[2])){
-            defaultTimeFormat = this.hour+"H"+this.min+"M";
-        }else{    
-            defaultTimeFormat = this.hour+":"+this.min+" "+this.timeDisplay;
-        }
+    public String returnDate(int displayOption){
+        String optionOne = this.month+"/"+this.day+"/"+this.year;
+        String optionTwo = this.day+"/"+this.month+"/"+this.year;
         
         String monthString = this.getStringMonth();
         String dayString = this.getFormalDay();
         String yearString = Integer.toString(this.year);
-        if (!isDefault){
-            return monthString+" "+dayString+","+yearString;
+        String optionThree = monthString+" "+dayString+","+yearString;
+        
+        String hourMin;
+        if (this.timeDisplay.matches(timeFormat[2])){
+            hourMin = this.hour+"H"+this.min+"M";
+        }else{    
+            hourMin = this.hour+":"+this.min+this.timeDisplay;
         }
         
-        return defaultDateFormat+" "+defaultTimeFormat;
+        String displayString;
+        switch(displayOption){
+            case 1:
+                displayString = optionOne+" "+hourMin;
+                break;
+            case 2:
+                displayString = optionTwo+" "+hourMin;
+                break;
+            case 3:
+                displayString = optionThree+" "+hourMin;
+                break;
+            default:
+                displayString = "invalid date time";
+                break;
+        }
+        
+        return displayString;  
     }
     /**
      * @param args the command line arguments
@@ -139,14 +155,14 @@ public class DateTimeWizard {
         DateTimeWizard dueDate = new DateTimeWizard();
         dueDate.setDate(24,3,2022);
         dueDate.setTime(11,59,1);
-        System.out.println("Midterm checkpoint date: "+dueDate.returnDate(false)
+        System.out.println("Midterm checkpoint date: "+dueDate.returnDate(1)
                             +" "+dueDate.timezone.getDisplayName());
         
         //Convert the deadline as on Pacific Time Zone
         dueDate.setTimeZone(dueDate.timezone,2,false);
         System.out.println("New timezone: "+dueDate.timezone.getDisplayName());
         dueDate.setTime(21,59,2);
-        System.out.println("Midterm checkpoint date: "+dueDate.returnDate(true)
+        System.out.println("Midterm checkpoint date: "+dueDate.returnDate(2)
                             +" "+dueDate.timezone.getDisplayName());
 
         //Convert the deadline as on Eastern Time Zone
@@ -154,7 +170,7 @@ public class DateTimeWizard {
         System.out.println("New timezone: "+dueDate.timezone.getDisplayName());
         dueDate.setDate(24,3,2022);
         dueDate.setTime(0,59,0);
-        System.out.println("Midterm checkpoint date: "+dueDate.returnDate(true)
+        System.out.println("Midterm checkpoint date: "+dueDate.returnDate(3)
                             +" "+dueDate.timezone.getDisplayName());
         
         
