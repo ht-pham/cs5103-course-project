@@ -23,19 +23,25 @@
 <div>
   <b>Requirements</b>
   <br>
-  The initial requirement is to transform it to any different time zone. The secondary requirement is to enable/disable Daylight Time Savings for all regions with an assumption that all regions start and end Daylight Time Savings. 
+  The initial requirement is to transform it to any different time zone. The secondary requirement is to add Daytime light Savings' start date and end date for all regions with an assumption that all regions start and end Daylight Time Savings. 
   <br>
 </div>
 
 <div>
-  <b>Timeline/Logs of the project</b>
-  <br>Mar 4th, 2022<br>
-  The DateTimeWizard class is built with basic attributes: 
+  <b>Major timelines of the project</b>
+  <br><i>Mar 4th, 2022</i><br>
+  The project only have two options for time display and one option for date display. The DateTimeWizard class is built with basic attributes: 
   <ol>
-<li> String[] timeFormat = {"AM","PM","24HR"} for easy modification on time display & String timeDisplay is for the selected time format to be display with a default value as "24HR"; </li>
-<li> Integer variables for date,month,year,hour,min; </li>
-<li> private Calendar datetime //This attribute is for future use of default Java functions in Calendar class.</li>
-<li> private TimeZone timezone = TimeZone.getTimeZone("GMT-6:00"); //Similar to the previous attribute, it is for future usage & default timezone value is Central time</li>
+    <li> String[] timeFormat = {"AM","PM","24HR"} for easy modification on time display & String timeDisplay is for the selected time format to be display with a default value as "24HR"; </li>
+    <li> Integer variables for date,month,year,hour,min; </li>
+    <li> private Calendar datetime //This attribute is for future use of default Java functions in Calendar class.</li>
+    <li> private TimeZone timezone = TimeZone.getTimeZone("GMT-6:00"); //Similar to the previous attribute, it is for future usage & default timezone value is Central time</li>
   </ol>
-The main class temporarily display the midterm check point date only. 
+  <i>Mar 16th, 2022</i>
+  <p>The date time display is now updated with 3 different options for date as well as 3 options for time (hour:min). This means, the program has 6 variations of date time display.</p>
+  <ol>
+    <li> MM/DD/YYYY HH'H':MM'M' GMT-??:00 &emsp;OR&emsp; MM/DD/YYYY HH:MM AM/PM GMT-??:00</li>
+    <li> DD/MM/YYYY HH'H':MM'M' GMT-??:00 &emsp;OR&emsp; DD/MM/YYYY HH:MM AM/PM GMT-??:00</li>
+    <li> MonthName Day'th/st/nd/rd', Year HH'H':MM'M' GMT-??:00  &emsp;OR&emsp; MonthName Day'th/st/nd/rd', Year HH:MM AM/PM GMT-??:00</li>
+  </ol>
 </div>
