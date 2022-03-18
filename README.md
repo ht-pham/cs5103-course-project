@@ -29,6 +29,7 @@
 
 <div>
   <b>Architecture</b>
+  <br>
   The project has two options for time display and one option for date display. The DateTimeWizard class is built with basic attributes: 
   <ol>
     <li> Integer variables for date,month,year,hour,min; They are crucial for most of setX() & getX() functions as well as creating LocalDate,LocalTime, and LocalDateTime objects</li>
