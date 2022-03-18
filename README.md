@@ -27,3 +27,16 @@
   <br>
 </div>
 
+<div>
+  <b>Architecture</b>
+  The project has two options for time display and one option for date display. The DateTimeWizard class is built with basic attributes: 
+  <ol>
+    <li> Integer variables for date,month,year,hour,min; They are crucial for most of setX() & getX() functions as well as creating LocalDate,LocalTime, and LocalDateTime objects</li>
+    <li> String[] timeFormat = {"AM","PM","24HR"} used a mediator to ensure user input for hour:min to be understood correctly </li>
+    <li> String timeDisplay is for the selected time format to be display with a default value as "24HR" </li>
+    <li> private TimeZone timezone = TimeZone.getTimeZone("GMT-6:00"); //Similar to the previous attribute, it is for future usage & default timezone value is Central time</li>
+    <li> private ZoneId zone</li>
+    <li> private LocalDate date</li>
+    <li> private LocalTime time</li>
+  </ol>
+</div>
