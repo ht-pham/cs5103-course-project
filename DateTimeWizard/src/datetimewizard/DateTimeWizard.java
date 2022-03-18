@@ -12,55 +12,56 @@ import java.util.Scanner;
  * @author huongpham
  */
 public class DateTimeWizard {
-    private final String[] timeFormat = {"AM","PM","24HR"};
-    private String timeDisplay = timeFormat[2];
     private int day,month,year,hour,min;
-    private Calendar datetime;
-    private TimeZone timezone = TimeZone.getTimeZone("GMT-6");//default
+    private final String[] timeFormat = {"AM","PM","24HR"};
+    private String timeDisplay = timeFormat[2]; 
+    
+    private TimeZone timezone = TimeZone.getTimeZone("America/Chicago");//default
+    private ZoneId zone= timezone.toZoneId();
+    
+    private LocalDate date;
+    private LocalTime time;
+    
     //Stuct
     public DateTimeWizard(){
-        //the current date at the default timezone
-        this.datetime = Calendar.getInstance(timezone);
-        
+        TimeZone.setDefault(this.timezone);      
     }
     
     public void setDate(int day, int month, int year){
-        this.datetime.set(year, month, day);
+        this.date = LocalDate.of(year, month, day);
         this.day = day;
         this.month = month;
         this.year = year;
     }
     
     public void setTime(int hour,int minute,int formatID){
-        this.hour = hour;
-        this.min = minute;
+        //This step is to save user preference on time displays: AM/PM or 24H
         if ((formatID<3)&&(formatID>=0)){
-            this.timeDisplay = timeFormat[formatID];
+            this.timeDisplay = this.timeFormat[formatID];
         }
+        
+        //This step is to ensure we understand correctly user input for time
+        if(this.timeFormat[formatID].matches("PM")){
+            this.hour = hour+12;
+        }else{
+            this.hour = hour;
+        }
+        this.min = minute;
+        /*This step is to create a LocalTime object which only understands daily
+        hour ranging from 00:00 to 23:59 */
+        this.time = LocalTime.of(this.hour, this.min);
+        
     }
     //This function is to change the current time zone to a new one
-    public void setTimeZone(TimeZone currentTimeZone,int change,boolean toEast){
-        String TimeZoneID = currentTimeZone.getID();
-        String zone = TimeZoneID.substring(4,6);
-        
-        int newZone = Integer.parseInt(zone);
-        
-        int newHour;
-        if(toEast==true){
-            newHour = newZone-change;
-        }else{
-            newHour = newZone+change;
-        }
-        String newZoneHour = String.valueOf(newHour);
-        TimeZoneID=TimeZoneID.replace(zone, newZoneHour);
-        
-        this.timezone = TimeZone.getTimeZone(TimeZoneID);
+    public void setTimeZone(ZoneId zone){
+        this.zone = zone;
+        this.timezone = TimeZone.getTimeZone(zone);
     }
     
-    public String getStringMonth(){
+    public String getStringMonth(int monthParam){
         String monthString;
         
-        switch (this.month) {
+        switch (monthParam) {
             case 1:  monthString = "January";
                      break;
             case 2:  monthString = "February";
@@ -92,9 +93,9 @@ public class DateTimeWizard {
         return monthString;
     }
     
-    public String getFormalDay(){
-        String dateNumber = Integer.toString(this.day);
-        switch (this.day) {
+    public String getFormalDay(int dayParam){
+        String dateNumber = Integer.toString(dayParam);
+        switch (dayParam) {
             case 1: case 21: case 31:
                 dateNumber = dateNumber.concat("st");
                 break;
@@ -111,35 +112,48 @@ public class DateTimeWizard {
         return dateNumber;
     }
     
-    public String returnDate(int displayOption){
-        String optionOne = this.month+"/"+this.day+"/"+this.year;
-        String optionTwo = this.day+"/"+this.month+"/"+this.year;
+    public String returnDate(ZonedDateTime localDate, int displayOption){
+        String dateString = localDate.toLocalDate().toString();
+        String timeString = localDate.toLocalTime().toString();
+        String zoneID = localDate.getZone().getId();
+        Integer monthVal = localDate.getMonthValue();
+        Integer dayVal = localDate.getDayOfMonth();
+        Integer yearVal = localDate.getYear();
         
-        String monthString = this.getStringMonth();
-        String dayString = this.getFormalDay();
+        String defaultOp = dateString+" "+timeString+" "+zoneID+" Time Zone";                   
+        String optionOne = monthVal+"/"+dayVal+"/"+yearVal;
+        String optionTwo = dayVal+"/"+monthVal+"/"+yearVal;
+        
+        String monthString = this.getStringMonth(monthVal);
+        String dayString = this.getFormalDay(dayVal);
         String yearString = Integer.toString(this.year);
         String optionThree = monthString+" "+dayString+","+yearString;
         
         String hourMin;
-        if (this.timeDisplay.matches(timeFormat[2])){
-            hourMin = this.hour+"H"+this.min+"M";
-        }else{    
-            hourMin = this.hour+":"+this.min+this.timeDisplay;
+        Integer hourVal = localDate.getHour();
+        Integer minVal = localDate.getMinute();
+        
+        if(this.timeDisplay.matches(timeFormat[2])){
+            hourMin = timeString;
+        }else if(this.timeDisplay.matches(timeFormat[1])&&(hourVal>=12)){
+            hourMin = (hourVal-12)+":"+minVal+this.timeDisplay+" "+zoneID;     
+        }else{
+            hourMin = hourVal+":"+minVal+"AM"+" "+zoneID;
         }
         
         String displayString;
         switch(displayOption){
             case 1:
-                displayString = optionOne+" "+hourMin;
+                displayString = optionOne+" "+hourMin+" Time Zone";
                 break;
             case 2:
-                displayString = optionTwo+" "+hourMin;
+                displayString = optionTwo+" "+hourMin+" Time Zone";
                 break;
             case 3:
-                displayString = optionThree+" "+hourMin;
+                displayString = optionThree+" "+hourMin+" Time Zone";
                 break;
             default:
-                displayString = "invalid date time";
+                displayString = defaultOp;
                 break;
         }
         
@@ -149,30 +163,50 @@ public class DateTimeWizard {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        /** The following block of code is to show default examples of three different types of hour display
-        ** will come back to clean this block of code **
-        **/
-        DateTimeWizard dueDate = new DateTimeWizard();
-        dueDate.setDate(24,3,2022);
-        dueDate.setTime(11,59,1);
-        System.out.println("Midterm checkpoint date: "+dueDate.returnDate(1)
-                            +" "+dueDate.timezone.getDisplayName());
         
-        //Convert the deadline as on Pacific Time Zone
-        dueDate.setTimeZone(dueDate.timezone,2,false);
-        System.out.println("New timezone: "+dueDate.timezone.getDisplayName());
-        dueDate.setTime(21,59,2);
-        System.out.println("Midterm checkpoint date: "+dueDate.returnDate(2)
-                            +" "+dueDate.timezone.getDisplayName());
-
-        //Convert the deadline as on Eastern Time Zone
-        dueDate.setTimeZone(dueDate.timezone,3,true);
-        System.out.println("New timezone: "+dueDate.timezone.getDisplayName());
-        dueDate.setDate(24,3,2022);
-        dueDate.setTime(0,59,0);
-        System.out.println("Midterm checkpoint date: "+dueDate.returnDate(3)
-                            +" "+dueDate.timezone.getDisplayName());
+        DateTimeWizard dtWizard = new DateTimeWizard();
         
+        //Set a temporary Date-Time for testing the ability of conversing time of the program
+        dtWizard.setDate(24,3,2022);
+        dtWizard.setTime(11,59,1);
+        LocalDateTime dueDate = LocalDateTime.of(dtWizard.date,dtWizard.time);
+        
+        //The date-time at the default time zone (Central Time Zone)
+        ZonedDateTime zdtChicago = ZonedDateTime.of(dueDate, dtWizard.zone);
+        System.out.println("Midterm checkpoint date: \n"
+                            +dtWizard.returnDateTime(zdtChicago,-1));
+        //check if the region use DST
+        boolean useDST = dtWizard.timezone.useDaylightTime();
+        System.out.println("It is "+useDST+" that "+dtWizard.zone+" use Daylight Savings Time");
+        
+        System.out.println();
+        
+        // The corresponding Date-Time in New York/Eastern Time Zone
+        ZonedDateTime zdtNY = zdtChicago.withZoneSameInstant(ZoneId.of("America/New_York"));
+        System.out.println(dtWizard.returnDateTime(zdtNY,3));
+        //check if the region use DST
+        dtWizard.setTimeZone(zdtNY.getZone());
+        useDST = TimeZone.getTimeZone(zdtNY.getZone()).observesDaylightTime();
+        System.out.println("It is "+useDST+" that "+dtWizard.zone+" use Daylight Savings Time");
+        System.out.println();
+        
+        //The corresponding Date-Time in Mountain Time Zome
+        ZonedDateTime zdtAZ = zdtChicago.withZoneSameInstant(ZoneId.of("America/Denver"));
+        System.out.println(dtWizard.returnDateTime(zdtAZ,1));
+        //check if the region use DST
+        dtWizard.setTimeZone(zdtAZ.getZone());
+        useDST = TimeZone.getTimeZone(zdtAZ.getZone()).observesDaylightTime();
+        System.out.println("It is "+useDST+" that "+dtWizard.zone+" use Daylight Savings Time");
+        System.out.println();
+        
+        //The corresponding Date-Time in Pacific Time Zone
+        ZonedDateTime zdtLA = zdtChicago.withZoneSameInstant(ZoneId.of("America/Los_Angeles"));
+        System.out.println(dtWizard.returnDateTime(zdtLA,2));
+        //check if the region use DST
+        dtWizard.setTimeZone(zdtLA.getZone());
+        useDST = TimeZone.getTimeZone(zdtLA.getZone()).observesDaylightTime();
+        System.out.println("It is "+useDST+" that "+dtWizard.zone+" use Daylight Savings Time");
+        System.out.println();
         
         //This is for user input when the project is run in terminal
         //Command: java $PATH/DateTimeWizard.java [Date] [HourAM/PM/24H] [TimeZone]
