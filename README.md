@@ -32,7 +32,13 @@
 </div>
 <div>
   <b>How to run</b><br>
-  In terminal, run following commands: <br>cd localpath<br>javac DateTimeWizard.java<br>java DateTimeWizard<br>
+  
+  In terminal, run following commands: 
+  ```
+  cd localpath
+  javac DateTimeWizard.java
+  java DateTimeWizard
+  ```
   In any IDE, just hit run button<br>
 </div>
 <div>
