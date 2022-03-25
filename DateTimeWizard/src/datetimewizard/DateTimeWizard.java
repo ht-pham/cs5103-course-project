@@ -35,10 +35,10 @@ public class DateTimeWizard {
     }
     
     public void setTime(int hour,int minute,int formatID){
-        //This step is to save user preference on time displays: AM/PM or 24H
+        /*This step is to save user preference on time displays: AM/PM or 24H
         if ((formatID<3)&&(formatID>=0)){
             this.timeDisplay = this.timeFormat[formatID];
-        }
+        }*/
         
         //This step is to ensure we understand correctly user input for time
         if(this.timeFormat[formatID].matches("PM")){
@@ -114,13 +114,14 @@ public class DateTimeWizard {
     
     public String returnDate(ZonedDateTime localDate, int displayOption){
         String dateString = localDate.toLocalDate().toString();
-        String timeString = localDate.toLocalTime().toString();
-        String zoneID = localDate.getZone().getId();
+        String timeString = Integer.toString(localDate.getHour())+":"
+                            + Integer.toString(localDate.getMinute());
+        String zoneID = this.zone.toString();
         Integer monthVal = localDate.getMonthValue();
         Integer dayVal = localDate.getDayOfMonth();
         Integer yearVal = localDate.getYear();
         
-        String defaultOp = dateString+" "+timeString+" "+zoneID+" Time Zone";                   
+        String defaultOp = dateString+" "+timeString+" in "+zoneID;                   
         String optionOne = monthVal+"/"+dayVal+"/"+yearVal;
         String optionTwo = dayVal+"/"+monthVal+"/"+yearVal;
         
@@ -136,21 +137,22 @@ public class DateTimeWizard {
         if(this.timeDisplay.matches(timeFormat[2])){
             hourMin = timeString;
         }else if(this.timeDisplay.matches(timeFormat[1])&&(hourVal>=12)){
-            hourMin = (hourVal-12)+":"+minVal+this.timeDisplay+" "+zoneID;     
+            hourMin = (hourVal-12)+":"+minVal+this.timeDisplay+" in "+zoneID;     
         }else{
-            hourMin = hourVal+":"+minVal+"AM"+" "+zoneID;
+            hourMin = hourVal+":"+minVal+"AM in "+zoneID;
         }
+        
         
         String displayString;
         switch(displayOption){
             case 1:
-                displayString = optionOne+" "+hourMin+" Time Zone";
+                displayString = optionOne+" at "+hourMin;
                 break;
             case 2:
-                displayString = optionTwo+" "+hourMin+" Time Zone";
+                displayString = optionTwo+" at "+hourMin;
                 break;
             case 3:
-                displayString = optionThree+" "+hourMin+" Time Zone";
+                displayString = optionThree+" at "+hourMin;
                 break;
             default:
                 displayString = defaultOp;
@@ -167,6 +169,7 @@ public class DateTimeWizard {
         DateTimeWizard dtWizard = new DateTimeWizard();
         
         //Set a temporary Date-Time for testing the ability of conversing time of the program
+        /*
         dtWizard.setDate(24,3,2022);
         dtWizard.setTime(11,59,1);
         LocalDateTime dueDate = LocalDateTime.of(dtWizard.date,dtWizard.time);
@@ -207,14 +210,114 @@ public class DateTimeWizard {
         useDST = TimeZone.getTimeZone(zdtLA.getZone()).observesDaylightTime();
         System.out.println("It is "+useDST+" that "+dtWizard.zone+" use Daylight Savings Time");
         System.out.println();
-        
-        //This is for user input when the project is run in terminal
-        //Command: java $PATH/DateTimeWizard.java [Date] [HourAM/PM/24H] [TimeZone]
-        //Current expected result: User's orignal input 
-        if (args.length>0){
-            for (String s: args) {
-                System.out.print(s+" ");
+        */
+        Scanner userinput = new Scanner(System.in);
+        boolean exit = false;
+        while(!exit){
+            System.out.println("Select one of the number to change to a new timezone if applicable:\n"
+                    + "(1) New York \n(2) Denver \n(3) Los Angeles \n(4) Chicago\n");
+            
+            Integer userChoice = userinput.nextInt();
+            String newZone="America/Chicago";
+            switch(userChoice){
+                    case 1:
+                        newZone = "America/New_York";
+                        break;
+                    case 2:
+                        newZone = "America/Denver";
+                        break;
+                    case 3:
+                        newZone = "America/Los_Angeles";
+                        break;
+                    case 4:
+                        newZone = "America/Chicago";
+                        break;
+                    default:
+                        System.out.println("No zone was selected.");
+                        System.out.println("Default zone is Chicago time.");
+                        break;
+            }
+            //Ask the user on their preferences on date time display
+            System.out.println("Select a display setting for date:\n"
+                    + "(1) MM/DD/YYYY \n(2) DD/MM/YYYY \n"
+                    + "(3) Month Day, Year (e.g. January 1st,2022)\n"
+                    + "(4) Defaul: YYYY-MM-DD");
+            userChoice = userinput.nextInt();
+            System.out.println("Select a display setting for time:\n"
+                    + "(1) AM/PM \n(2) 24HR \n");
+            
+            Integer timeChoice = userinput.nextInt();
+            switch(timeChoice){
+                    case 1:
+                        dtWizard.timeDisplay = dtWizard.timeFormat[timeChoice];
+                        break;
+                    case 2:
+                        dtWizard.timeDisplay = dtWizard.timeFormat[timeChoice];
+                        break;
+                    default:
+                        System.out.println("No time display setting was selected.");
+                        System.out.println("Default choice is 24HR.");
+                        break;
+            }
+           
+            //this is to use the current time in the [expected] local CST time zone 
+            LocalDateTime now = LocalDateTime.now();
+            ZonedDateTime local = ZonedDateTime.of(now,ZoneId.of("America/Chicago"));
+            dtWizard.setDate(now.getDayOfMonth(),now.getMonthValue(),now.getYear());
+            dtWizard.setTime(now.getHour(),now.getMinute(),2);
+            
+            //This is to convert the current time in local to the preferred time zone selected by the user
+            dtWizard.setTimeZone(TimeZone.getTimeZone(newZone).toZoneId());
+            ZonedDateTime userSelectedZone = local.withZoneSameInstant(ZoneId.of(newZone));
+            
+            System.out.println("Current Time at "+dtWizard.zone.toString()+": \n"
+                            +dtWizard.returnDateTime(userSelectedZone,userChoice));
+            
+            boolean obsDST = dtWizard.timezone.useDaylightTime();
+            boolean inDST = dtWizard.timezone.inDaylightTime(new Date());
+            dtWizard.startDSTdate = LocalDate.of(2022, 3, 13);
+            dtWizard.endDSTdate = LocalDate.of(2022, 11, 3);
+            Integer days;
+            
+            
+            System.out.println("How can we help you here?\n"
+                    + "(1) Check out the time at another zone\n"
+                    + "(2) Check if the current time zone is in DST\n"
+                    + "(3) How many days until DST starts/ends\n"
+                    + "(4) Exit"
+            );
+            userChoice = userinput.nextInt();
+            
+            switch(userChoice){
+                    case 1:
+                        break;
+                    case 2:
+                        System.out.println("It is "+obsDST+" that "+dtWizard.zone
+                                +" use Daylight Savings Time");
+                        System.out.println("It is "+inDST+" that "
+                                +dtWizard.zone+" in Daylight Savings Time");
+                        break;
+                    case 3:
+                        boolean passed = now.toLocalDate().isAfter(dtWizard.startDSTdate);
+                        if(passed&&obsDST){
+                            days = now.getDayOfYear()-dtWizard.startDSTdate.getDayOfYear();
+                            System.out.println("It has been "+days+"days since DST started");
+                            days = dtWizard.endDSTdate.getDayOfYear()-now.getDayOfYear();
+                            System.out.println("It is "+days+"days until DST ends");
+                        }else{
+                            System.out.println("It may be false that "+dtWizard.zone
+                                +" use Daylight Savings Time or the");
+                        }
+                        break;
+                    case 4:
+                        exit = true;
+                        break;
+                    default:
+                        System.out.println("No choice was selected.");
+                        System.out.println("Default choice is 1.");
+                        break;
             }
         }
+        
     }
 }
