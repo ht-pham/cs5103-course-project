@@ -1,14 +1,11 @@
 # CS5103 Course Project: Software Engineering Practice
-
+### Overview
 <div>
-  <b>Overview</b>
-  <br> 
   This is a programming project for the graduate-level course CS5103 Software Engineering @UTSA. The project is written in Java language. 
 </div>
 
+### Goal of the project
 <div>
-  <b>Goal of the project</b>
-  <br>
   The goal of this project is to transform the given date time string to different formats.     
 </div>
 
@@ -19,19 +16,9 @@
   4. Testing: Write unit tests for your classes.
   5. Tool Application: Apply code clone detection, static bug detection on your code base and report results.
 --->
-
-<div>
-  <b>System Requirements</b>
-  <br>
+### System Requirement
   Need to have JDK8 or JDK11 installed on the laptop
-  <br>
-  <b>Requirements</b>
-  <br>
-  The initial requirement is to transform it to any different time zone. The secondary requirement is to add Daytime light Savings' start date and end date for all regions with an assumption that all regions start and end Daylight Time Savings. 
-  <br>
-</div>
-<div>
-  <b>How to run</b><br>
+  #### How to run
   
   In terminal, run following commands: 
   ```
@@ -40,7 +27,12 @@
   java DateTimeWizard
   ```
   In any IDE, just hit run button<br>
-</div>
+  
+### Requirements
+
+  The initial requirement is to transform it to any different time zone. The secondary requirement is to add Daytime light Savings' start date and end date for all regions with an assumption that all regions start and end Daylight Time Savings. 
+  <br>
+
 <div>
   <b>Architecture</b>
   <br>
