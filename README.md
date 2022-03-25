@@ -21,12 +21,20 @@
 --->
 
 <div>
+  <b>System Requirements</b>
+  <br>
+  Need to have JDK8 or JDK11 installed on the laptop
+  <br>
   <b>Requirements</b>
   <br>
   The initial requirement is to transform it to any different time zone. The secondary requirement is to add Daytime light Savings' start date and end date for all regions with an assumption that all regions start and end Daylight Time Savings. 
   <br>
 </div>
-
+<div>
+  <b>How to run</b><br>
+  In terminal, run following commands: <br>cd localpath<br>javac DateTimeWizard.java<br>java DateTimeWizard<br>
+  In any IDE, just hit run button<br>
+</div>
 <div>
   <b>Architecture</b>
   <br>
