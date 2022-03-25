@@ -241,7 +241,7 @@ public class DateTimeWizard {
             System.out.println("Select a display setting for date:\n"
                     + "(1) MM/DD/YYYY \n(2) DD/MM/YYYY \n"
                     + "(3) Month Day, Year (e.g. January 1st,2022)\n"
-                    + "(4) Defaul: YYYY-MM-DD");
+                    + "(4) Default: YYYY-MM-DD");
             userChoice = userinput.nextInt();
             System.out.println("Select a display setting for time:\n"
                     + "(1) AM/PM \n(2) 24HR \n");
@@ -276,7 +276,7 @@ public class DateTimeWizard {
             boolean obsDST = dtWizard.timezone.useDaylightTime();
             boolean inDST = dtWizard.timezone.inDaylightTime(new Date());
             dtWizard.startDSTdate = LocalDate.of(2022, 3, 13);
-            dtWizard.endDSTdate = LocalDate.of(2022, 11, 3);
+            dtWizard.endDSTdate = LocalDate.of(2022, 11, 6);
             Integer days;
             
             
@@ -301,9 +301,9 @@ public class DateTimeWizard {
                         boolean passed = now.toLocalDate().isAfter(dtWizard.startDSTdate);
                         if(passed&&obsDST){
                             days = now.getDayOfYear()-dtWizard.startDSTdate.getDayOfYear();
-                            System.out.println("It has been "+days+"days since DST started");
+                            System.out.println("It has been "+days+" days since DST started");
                             days = dtWizard.endDSTdate.getDayOfYear()-now.getDayOfYear();
-                            System.out.println("It is "+days+"days until DST ends");
+                            System.out.println("It is "+days+" days until DST ends");
                         }else{
                             System.out.println("It may be false that "+dtWizard.zone
                                 +" use Daylight Savings Time or the");
