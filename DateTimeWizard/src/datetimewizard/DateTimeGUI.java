@@ -22,32 +22,51 @@ import java.awt.*;
  * @author huongpham
  */
 public class DateTimeGUI {
+    public JFrame frame;
+    public Label currentTime; 
+    public Label location;
+    public Label question1;
     
     public DateTimeGUI(){
-        JFrame frame = new JFrame();
+        //Create a container
+        this.frame = new JFrame("Date Time Wizard");
+        ImageIcon image = new ImageIcon("logo.png");
         
-        JPanel panel = new JPanel();
-        panel.setBorder(BorderFactory.createBevelBorder(0, Color.lightGray, Color.blue));
-        panel.setLayout(new GridLayout());
         
-        frame.add(panel,BorderLayout.CENTER);
+        //Create components
+        this.location = new Label();
+        this.location.setAlignment(Label.LEFT);
+        this.location.setBounds(10,0,600,20);
+        
+        this.currentTime = new Label();
+        this.currentTime.setAlignment(Label.LEFT);
+        this.currentTime.setBounds(10,20,600,20);
+        
+        this.question1 = new Label("How can we help you?");
+        this.currentTime.setAlignment(Label.LEFT);
+        this.question1.setBounds(10, 40, 600, 20);
+        //Add components
+        frame.add(this.location);
+        frame.add(this.currentTime);
+        //frame.add(this.question1);
+        
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle("Date Time Wizard");
+        frame.setSize(1200, 600);
+        frame.setIconImage(image.getImage());
+        frame.setResizable(true);
+        
+        frame.getContentPane().setBackground(new Color(179, 206, 229));
         frame.pack();
         frame.setVisible(true);
         
         
     }
-    public static void main(String[] args) {
-        DateTimeGUI window = new DateTimeGUI();
-        DateTimeWizard dtWizard = new DateTimeWizard();
-        
+    public static void main(String[] args) { 
         //Set a temporary Date-Time for testing the ability of conversing time of the program
         /*
         dtWizard.setDate(24,3,2022);
         dtWizard.setTime(11,59,1);
         LocalDateTime dueDate = LocalDateTime.of(dtWizard.date,dtWizard.time);
-        
         
         ZonedDateTime zdtChicago = ZonedDateTime.of(dueDate, dtWizard.zone);
         System.out.println("Midterm checkpoint date: \n"
@@ -55,8 +74,6 @@ public class DateTimeGUI {
         //check if the region use DST
         boolean useDST = dtWizard.timezone.useDaylightTime();
         System.out.println("It is "+useDST+" that "+dtWizard.zone+" use Daylight Savings Time");
-        
-        
         
         System.out.println();
         // The corresponding Date-Time in New York/Eastern Time Zone
@@ -86,6 +103,8 @@ public class DateTimeGUI {
         System.out.println("It is "+useDST+" that "+dtWizard.zone+"is in Daylight Savings Time");
         System.out.println();
         */
+        
+        DateTimeWizard dtWizard = new DateTimeWizard();
         Scanner userinput = new Scanner(System.in);
         boolean exit = false;
         while(!exit){
@@ -147,6 +166,11 @@ public class DateTimeGUI {
             
             System.out.println("Current Time in "+dtWizard.zone.toString()+": \n"
                             +dtWizard.returnDateTime(userSelectedZone,userChoice));
+            
+            //Display the date time in pop-up window
+            DateTimeGUI window = new DateTimeGUI();
+            window.location.setText("Current Time in "+dtWizard.zone.toString()+":");
+            window.currentTime.setText(dtWizard.returnDateTime(userSelectedZone,userChoice));
             
             boolean obsDST = dtWizard.timezone.useDaylightTime();
             boolean inDST = dtWizard.timezone.inDaylightTime(new Date());
