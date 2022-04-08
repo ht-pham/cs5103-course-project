@@ -12,15 +12,15 @@ import java.util.Scanner;
  * @author huongpham
  */
 public class DateTimeWizard {
-    private int day,month,year,hour,min;
-    private final String[] timeFormat = {"AM","PM","24HR"};
-    private String timeDisplay = timeFormat[2]; 
+    public int day,month,year,hour,min;
+    public final String[] timeFormat = {"AM","PM","24HR"};
+    public String timeDisplay = timeFormat[2]; 
     
-    private TimeZone timezone = TimeZone.getTimeZone("America/Chicago");//default
-    private ZoneId zone= timezone.toZoneId();
+    public TimeZone timezone = TimeZone.getTimeZone("America/Chicago");//default
+    public ZoneId zone= timezone.toZoneId();
     
-    private LocalDate date;
-    private LocalTime time;
+    public LocalDate date;
+    public LocalTime time;
     
     //Stuct
     public DateTimeWizard(){
@@ -114,8 +114,25 @@ public class DateTimeWizard {
     
     public String returnDate(ZonedDateTime localDate, int displayOption){
         String dateString = localDate.toLocalDate().toString();
-        String timeString = Integer.toString(localDate.getHour())+":"
-                            + Integer.toString(localDate.getMinute());
+        
+        Integer hourVal = localDate.getHour();
+        Integer minVal = localDate.getMinute();
+        
+        String hourDisplay;
+        if(hourVal<10){
+            hourDisplay = "0"+minVal.toString();
+        }else{
+            hourDisplay = minVal.toString();
+        }
+        String minDisplay;
+        if(minVal<10){
+            minDisplay = "0"+minVal.toString();
+        }else{
+            minDisplay = minVal.toString();
+        }
+     
+        String timeString = hourDisplay+":"+minDisplay;
+        
         String zoneID = this.zone.toString();
         Integer monthVal = localDate.getMonthValue();
         Integer dayVal = localDate.getDayOfMonth();
@@ -131,15 +148,12 @@ public class DateTimeWizard {
         String optionThree = monthString+" "+dayString+","+yearString;
         
         String hourMin;
-        Integer hourVal = localDate.getHour();
-        Integer minVal = localDate.getMinute();
-        
         if(this.timeDisplay.matches(timeFormat[2])){
             hourMin = timeString;
         }else if(this.timeDisplay.matches(timeFormat[1])&&(hourVal>=12)){
-            hourMin = (hourVal-12)+":"+minVal+this.timeDisplay+" in "+zoneID;     
+            hourMin = (hourVal-12)+":"+minDisplay+this.timeDisplay+" in "+zoneID;     
         }else{
-            hourMin = hourVal+":"+minVal+"AM in "+zoneID;
+            hourMin = hourVal+":"+minDisplay+"AM in "+zoneID;
         }
         
         
