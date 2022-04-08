@@ -26,6 +26,8 @@ public class DateTimeGUI {
     public Label currentTime; 
     public Label location;
     public Label question1;
+    public Label dayCount1;
+    public Label dayCount2;
     
     public DateTimeGUI(){
         //Create a container
@@ -45,10 +47,20 @@ public class DateTimeGUI {
         this.question1 = new Label("How can we help you?");
         this.currentTime.setAlignment(Label.LEFT);
         this.question1.setBounds(10, 40, 600, 20);
+        
+        this.dayCount1 = new Label();
+        this.dayCount1.setAlignment(Label.LEFT);
+        this.dayCount1.setBounds(10, 40, 600, 20);
+        
+        this.dayCount2 = new Label();
+        this.dayCount2.setAlignment(Label.LEFT);
+        this.dayCount2.setBounds(10, 60, 600, 20);
         //Add components
         frame.add(this.location);
         frame.add(this.currentTime);
         //frame.add(this.question1);
+        frame.add(this.dayCount1);
+        frame.add(this.dayCount2);
         
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1200, 600);
@@ -200,8 +212,10 @@ public class DateTimeGUI {
                         if(passed&&obsDST){
                             days = now.getDayOfYear()-dtWizard.startDSTdate.getDayOfYear();
                             System.out.println("It has been "+days+" days since DST started");
+                            window.dayCount1.setText("It has been "+days+" days since DST started");
                             days = dtWizard.endDSTdate.getDayOfYear()-now.getDayOfYear();
                             System.out.println("It is "+days+" days until DST ends");
+                            window.dayCount2.setText("It is "+days+" days until DST ends");
                         }else{
                             System.out.println("It may be false that "+dtWizard.zone
                                 +" use Daylight Savings Time or the");
