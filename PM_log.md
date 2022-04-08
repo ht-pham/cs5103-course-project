@@ -43,5 +43,6 @@
            3. Check how many days until DST starts/ends<br>
            4. Exit the program.<br>
     </ul>
-  
+  <i>April 7th, 2022</i>
+  <div>Added GUI to the project. The current idea is to display the date time based on the selection of the user from console.</div>
 
