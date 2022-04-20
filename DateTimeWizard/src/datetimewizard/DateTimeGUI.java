@@ -73,6 +73,7 @@ public class DateTimeGUI {
         
         
     }
+    /**
     public static void main(String[] args) { 
         //Set a temporary Date-Time for testing the ability of conversing time of the program
         /*
@@ -114,7 +115,7 @@ public class DateTimeGUI {
         useDST = TimeZone.getTimeZone(zdtLA.getZone()).inDaylightTime(new Date());
         System.out.println("It is "+useDST+" that "+dtWizard.zone+"is in Daylight Savings Time");
         System.out.println();
-        */
+        
         
         DateTimeWizard dtWizard = new DateTimeWizard();
         Scanner userinput = new Scanner(System.in);
@@ -232,5 +233,5 @@ public class DateTimeGUI {
             
         }
   
-    }
+    }*/
 }
