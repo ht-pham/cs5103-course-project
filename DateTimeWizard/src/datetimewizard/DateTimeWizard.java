@@ -175,8 +175,7 @@ public class DateTimeWizard {
         
         return displayString;  
     }
-    /**
-     * @param args the command line arguments
+    /*@param args the command line arguments*/
      
     public static void main(String[] args) {
         
@@ -224,7 +223,7 @@ public class DateTimeWizard {
         useDST = TimeZone.getTimeZone(zdtLA.getZone()).observesDaylightTime();
         System.out.println("It is "+useDST+" that "+dtWizard.zone+" use Daylight Savings Time");
         System.out.println();
-        
+        */
         Scanner userinput = new Scanner(System.in);
         boolean exit = false;
         while(!exit){
@@ -333,5 +332,5 @@ public class DateTimeWizard {
             }
         }
         
-    }*/
+    }
 }
