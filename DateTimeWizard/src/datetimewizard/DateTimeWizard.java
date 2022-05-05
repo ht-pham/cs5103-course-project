@@ -123,9 +123,9 @@ public class DateTimeWizard {
         
         String hourDisplay;
         if(hourVal<10){
-            hourDisplay = "0"+minVal.toString();
+            hourDisplay = "0"+hourVal.toString();
         }else{
-            hourDisplay = minVal.toString();
+            hourDisplay = hourVal.toString();
         }
         String minDisplay;
         if(minVal<10){
