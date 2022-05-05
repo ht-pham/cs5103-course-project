@@ -115,6 +115,9 @@ public class DateTimeWizard {
     public String returnDate(ZonedDateTime localDate, int displayOption){
         String dateString = localDate.toLocalDate().toString();
         
+        DayOfWeek dayOfWeek = localDate.getDayOfWeek();
+        String weekDay = dayOfWeek.toString().toLowerCase();
+        
         Integer hourVal = localDate.getHour();
         Integer minVal = localDate.getMinute();
         
@@ -138,14 +141,14 @@ public class DateTimeWizard {
         Integer dayVal = localDate.getDayOfMonth();
         Integer yearVal = localDate.getYear();
         
-        String defaultOp = dateString+" "+timeString+" in "+zoneID;                   
-        String optionOne = monthVal+"/"+dayVal+"/"+yearVal;
-        String optionTwo = dayVal+"/"+monthVal+"/"+yearVal;
+        String defaultOp = dateString+" "+weekDay+" "+timeString+" in "+zoneID;                   
+        String optionOne = monthVal+"/"+dayVal+"/"+yearVal+" "+weekDay;
+        String optionTwo = dayVal+"/"+monthVal+"/"+yearVal+" "+weekDay;
         
         String monthString = this.getStringMonth(monthVal);
         String dayString = this.getFormalDay(dayVal);
         String yearString = Integer.toString(this.year);
-        String optionThree = monthString+" "+dayString+","+yearString;
+        String optionThree = monthString+" "+dayString+","+yearString+" "+weekDay;
         
         String hourMin;
         if(this.timeDisplay.matches(timeFormat[2])){
