@@ -111,7 +111,7 @@ public class DateTimeWizard {
                 dateNumber = dateNumber.concat("nd");
                 break;
             case 3: case 23:
-                dateNumber = dateNumber.concat("st");
+                dateNumber = dateNumber.concat("rd");
                 break;
             default: 
                 dateNumber = dateNumber.concat("th");
