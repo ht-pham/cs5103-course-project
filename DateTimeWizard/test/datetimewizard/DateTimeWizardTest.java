@@ -173,6 +173,7 @@ public class DateTimeWizardTest {
         Integer[] expResult = null;
         Integer[] result = instance.getTime(localDate);
         assertArrayEquals(expResult, result);
+        assertArrayEquals(new Integer[]{11,28}, instance.getTime(ZonedDateTime.of(LocalDate.of(2022,5,8), LocalTime.of(11, 28), instance.zone)));
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -188,6 +189,9 @@ public class DateTimeWizardTest {
         DayOfWeek expResult = null;
         DayOfWeek result = instance.getDayOfWeek(localDate);
         assertEquals(expResult, result);
+        assertEquals("sunday",instance.getDayOfWeek(ZonedDateTime.of(LocalDate.of(2022,5,8), LocalTime.of(12, 0), instance.zone)));
+        assertEquals("wednesday",instance.getDayOfWeek(ZonedDateTime.of(LocalDate.of(2022,3,9), LocalTime.of(12, 10), instance.zone)));
+        assertEquals("monday",instance.getDayOfWeek(ZonedDateTime.of(LocalDate.of(2022,5,30), LocalTime.of(12, 0), instance.zone)));         
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -202,7 +206,11 @@ public class DateTimeWizardTest {
         DateTimeWizard instance = new DateTimeWizard();
         String expResult = "";
         String result = instance.getClockTime(timeClock);
+        
         assertEquals(expResult, result);
+        assertEquals("10:55",instance.getClockTime(new Integer[]{10,55}));
+        assertEquals("3:45",instance.getClockTime(new Integer[]{3,45}));
+        assertEquals("19:20",instance.getClockTime(new Integer[]{19,20}));
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -239,7 +247,7 @@ public class DateTimeWizardTest {
     public void testGetTimeZone() {
         System.out.println("getTimeZone");
         DateTimeWizard instance = new DateTimeWizard();
-        String expResult = "";
+        String expResult = "America/Chicago";
         String result = instance.getTimeZone();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
