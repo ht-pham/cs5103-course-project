@@ -51,5 +51,5 @@
   <i>May 6th, 2022</i>
   <div>Added Day of Week info in the returnDateTime() function.</div>
   <i>May 8th, 2022</i>
-  <div>Added unit tests for DateTimeWizard.</div>
+  <div>Created 3 new functions -- getDayOfWeek(), getTime(), getClockTime(), getTimeZone() to refactor returnDateTime() functions. getDayOfWeek() is built to meet requirement 3 and do its unit testing cases. Added setDSTdates() and getDSTdates() for fulfilling unit test cases for requirement 2. </div>
   
