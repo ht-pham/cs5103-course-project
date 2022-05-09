@@ -48,8 +48,8 @@
 
   <i>April 20th, 2022</i>
   <div>Removed the GUI change and reverted the changes back to the timeline before April 7th, 2022</div>
-  <i>May 6th, 2022</i>
+  <i>May 5th, 2022</i>
   <div>Added Day of Week info in the returnDateTime() function.</div>
   <i>May 8th, 2022</i>
-  <div>Created 3 new functions -- getDayOfWeek(), getTime(), getClockTime(), getTimeZone() to refactor returnDateTime() functions. getDayOfWeek() is built to meet requirement 3 and do its unit testing cases. Added setDSTdates() and getDSTdates() for fulfilling unit test cases for requirement 2. </div>
+  <div>Created 3 new functions -- getDayOfWeek(), getTime(), getClockTime(), getTimeZone() to refactor returnDateTime() functions and getDayOfWeek() was built to meet requirement 3 and do its unit testing cases. Also, added setDSTdates() and getDSTdates() for fulfilling unit test cases for requirement 2. Testing class is built using JUnit4 and units that got tested are getter functions and returnDateTime() </div>
   
