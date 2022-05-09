@@ -45,6 +45,8 @@
     <li> private ZoneId zone</li>
     <li> private LocalDate date</li>
     <li> private LocalTime time</li>
+    <li> private LocalDate date</li>
+    <li> private LocalDate time</li>
   </ol>
   
   The DateTimeWizard class is built with basic behaviors: 
@@ -55,9 +57,9 @@
   </ol>
   <b>How the system was built to make requirements</b>
   <ol>
-    <li> Requirement 1 - Change the timezone: setTimeZone(ZoneId zone) was built to change the current timezone to new one by the param 'zone'</li>
-    <li> Requirement 2 - Add DST info: in main function. </li>
-    <li> Requirement 3 - Display Day of Week: getDayOfWeek(ZonedDateTime localDate)</li>
+    <li> Requirement 1 - Change the timezone: setTimeZone(ZoneId zone) was built to change the current timezone to new one by the param 'zone'. Updated on May 8th: new method getTimeZone() to return TimeZone info</li>
+    <li> Requirement 2 - Add DST info: DateTimeWizard has two new attributes: startDST and endDST of LocalDate => performed in main function. Updated on May 8th: setDSTdates() is added to set up the records for DST info & getDSTDates() to return start & end date of DST.</li>
+    <li> Requirement 3 - Display Day of Week: new method called getDayOfWeek(ZonedDateTime localDate)</li>
   </ol>
 </div>
 
