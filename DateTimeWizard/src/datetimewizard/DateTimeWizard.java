@@ -34,6 +34,11 @@ public class DateTimeWizard {
         this.year = year;
     }
     
+    public void setDSTdates(LocalDate startDt,LocalDate endDt){
+        this.startDSTdate = startDt;
+        this.endDSTdate = endDt;
+    }
+    
     public void setTime(int hour,int minute,int formatID){
         /*This step is to save user preference on time displays: AM/PM or 24H
         if ((formatID<3)&&(formatID>=0)){
@@ -150,7 +155,12 @@ public class DateTimeWizard {
         }
         return hourMin;
     }
-    public String returnDate(ZonedDateTime localDate, int displayOption){
+    
+    public String getTimeZone(){
+        return this.zone.toString();
+    }
+    
+    public String returnDateTime(ZonedDateTime localDate, int displayOption){
         if (localDate == null){
             return "No date found";
         }
@@ -163,7 +173,7 @@ public class DateTimeWizard {
         String timeString = this.getClockTime(timeClock);
         
         
-        String zoneID = this.zone.toString();
+        String zoneID = this.getTimeZone();
         Integer monthVal = localDate.getMonthValue();
         Integer dayVal = localDate.getDayOfMonth();
         Integer yearVal = localDate.getYear();
@@ -193,6 +203,14 @@ public class DateTimeWizard {
         }
         
         return displayString;  
+    }
+    
+    public LocalDate getDate(){
+        return this.date;
+    }
+    public LocalDate[] getDSTdates(){
+        LocalDate[] DSTdates = {this.startDSTdate,this.endDSTdate};
+        return DSTdates ;
     }
     /*@param args the command line arguments*/
      
@@ -307,8 +325,7 @@ public class DateTimeWizard {
             
             boolean obsDST = dtWizard.timezone.useDaylightTime();
             boolean inDST = dtWizard.timezone.inDaylightTime(new Date());
-            dtWizard.startDSTdate = LocalDate.of(2022, 3, 13);
-            dtWizard.endDSTdate = LocalDate.of(2022, 11, 6);
+            dtWizard.setDSTdates(LocalDate.of(2022, 3, 13),LocalDate.of(2022, 11, 3));
             Integer days;
             
             
