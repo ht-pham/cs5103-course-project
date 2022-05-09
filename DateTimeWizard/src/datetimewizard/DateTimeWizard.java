@@ -115,6 +115,41 @@ public class DateTimeWizard {
         return dateNumber;
     }
     
+    public Integer[] getTime(ZonedDateTime localDate){
+        Integer hourVal = localDate.getHour();
+        Integer minVal = localDate.getMinute();
+        Integer[] timeClock = {hourVal,minVal};
+        return timeClock;
+    }
+    public DayOfWeek getDayOfWeek(ZonedDateTime localDate){
+        return localDate.getDayOfWeek();
+    }
+    
+    public String getClockTime(Integer[] timeClock){
+        String hourDisplay;
+        if(timeClock[0]<10){
+            hourDisplay = "0"+timeClock[0].toString();
+        }else{
+            hourDisplay = timeClock[0].toString();
+        }
+        String minDisplay;
+        if(timeClock[1]<10){
+            minDisplay = "0"+timeClock[1].toString();
+        }else{
+            minDisplay = timeClock[1].toString();
+        }
+        
+        String timeString = hourDisplay+":"+minDisplay;
+        String hourMin;
+        if(this.timeDisplay.matches(timeFormat[2])){
+            hourMin = timeString;
+        }else if(this.timeDisplay.matches(timeFormat[1])&&(hourVal>=12)){
+            hourMin = (hourVal-12)+":"+minDisplay+this.timeDisplay;     
+        }else{
+            hourMin = hourVal+":"+minDisplay+"AM";
+        }
+        return hourMin;
+    }
     public String returnDate(ZonedDateTime localDate, int displayOption){
         if (localDate == null){
             return "No date found";
@@ -122,25 +157,11 @@ public class DateTimeWizard {
         String dateString = localDate.toLocalDate().toString();
         
         DayOfWeek dayOfWeek = localDate.getDayOfWeek();
-        String weekDay = dayOfWeek.toString().toLowerCase();
+        String weekDay = dayOfWeek.toString();
         
-        Integer hourVal = localDate.getHour();
-        Integer minVal = localDate.getMinute();
+        Integer[] timeClock= this.getTime(localDate);
+        String timeString = this.getClockTime(timeClock);
         
-        String hourDisplay;
-        if(hourVal<10){
-            hourDisplay = "0"+hourVal.toString();
-        }else{
-            hourDisplay = hourVal.toString();
-        }
-        String minDisplay;
-        if(minVal<10){
-            minDisplay = "0"+minVal.toString();
-        }else{
-            minDisplay = minVal.toString();
-        }
-     
-        String timeString = hourDisplay+":"+minDisplay;
         
         String zoneID = this.zone.toString();
         Integer monthVal = localDate.getMonthValue();
@@ -153,29 +174,18 @@ public class DateTimeWizard {
         
         String monthString = this.getStringMonth(monthVal);
         String dayString = this.getFormalDay(dayVal);
-        String yearString = Integer.toString(this.year);
-        String optionThree = monthString+" "+dayString+","+yearString+" "+weekDay;
-        
-        String hourMin;
-        if(this.timeDisplay.matches(timeFormat[2])){
-            hourMin = timeString;
-        }else if(this.timeDisplay.matches(timeFormat[1])&&(hourVal>=12)){
-            hourMin = (hourVal-12)+":"+minDisplay+this.timeDisplay+" in "+zoneID;     
-        }else{
-            hourMin = hourVal+":"+minDisplay+"AM in "+zoneID;
-        }
-        
+        String optionThree = monthString+" "+dayString+","+yearVal+" "+weekDay;
         
         String displayString;
         switch(displayOption){
             case 1:
-                displayString = optionOne+" at "+hourMin;
+                displayString = optionOne+" at "+timeString;
                 break;
             case 2:
-                displayString = optionTwo+" at "+hourMin;
+                displayString = optionTwo+" at "+timeString;
                 break;
             case 3:
-                displayString = optionThree+" at "+hourMin;
+                displayString = optionThree+" at "+timeString;
                 break;
             default:
                 displayString = defaultOp;
