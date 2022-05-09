@@ -45,8 +45,8 @@
     <li> private ZoneId zone</li>
     <li> private LocalDate date</li>
     <li> private LocalTime time</li>
-    <li> private LocalDate date</li>
-    <li> private LocalDate time</li>
+    <li> private LocalDate startDSTdate</li>
+    <li> private LocalDate endDSTdate</li>
   </ol>
   
   The DateTimeWizard class is built with basic behaviors: 
@@ -63,3 +63,8 @@
   </ol>
 </div>
 
+### Testing
+<ul>
+    <li> Console: User interacts/tests in the command prompts by following steps and the current date time will be displayed. If interested more, user can continue selecting 4 options: (1) Check time in another time zone, (2) Check if the current zone uses DST, (3) Dates after DST starts and until DST ends, (4) Exit</li>
+    <li> Unit Testing: find in test folder the test class - DateTimeWizardTest.java. The unit tests are run for all getter functions and returnDateTime() function</li>
+</ul>
