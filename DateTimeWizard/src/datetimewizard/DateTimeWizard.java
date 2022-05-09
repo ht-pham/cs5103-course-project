@@ -95,6 +95,9 @@ public class DateTimeWizard {
     
     public String getFormalDay(int dayParam){
         String dateNumber = Integer.toString(dayParam);
+        if((dayParam<1)||(dayParam>31)){
+            return "Invalid Day";
+        }
         switch (dayParam) {
             case 1: case 21: case 31:
                 dateNumber = dateNumber.concat("st");
@@ -113,6 +116,9 @@ public class DateTimeWizard {
     }
     
     public String returnDate(ZonedDateTime localDate, int displayOption){
+        if (localDate == null){
+            return "No date found";
+        }
         String dateString = localDate.toLocalDate().toString();
         
         DayOfWeek dayOfWeek = localDate.getDayOfWeek();
