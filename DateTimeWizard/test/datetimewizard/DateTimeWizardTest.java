@@ -6,6 +6,7 @@ package datetimewizard;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.TimeZone;
@@ -94,8 +95,7 @@ public class DateTimeWizardTest {
         assertEquals("January",instance.getStringMonth(1));
         assertEquals("May",instance.getStringMonth(5));
         
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -114,8 +114,7 @@ public class DateTimeWizardTest {
         assertEquals("3rd",instance.getFormalDay(3));
         assertEquals("22nd",instance.getFormalDay(22));
  
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -127,18 +126,18 @@ public class DateTimeWizardTest {
         DateTimeWizard instance = new DateTimeWizard();
         int displayOption = 2;
         instance.setTimeZone(TimeZone.getTimeZone("America/Chicago").toZoneId());
-        instance.date = LocalDate.now();
         
         ZonedDateTime localDate = null;
         String expResult = "No date found";
         String result = instance.returnDateTime(localDate, displayOption);
         assertEquals(expResult, result);
+        localDate = ZonedDateTime.of(LocalDate.of(2022,5,8), LocalTime.of(11, 28),instance.zone);
+        assertEquals("8/5/2022 sunday at 11:28",instance.returnDateTime(localDate, displayOption));
+        localDate = ZonedDateTime.of(LocalDate.of(2018,3,31), LocalTime.of(18, 00),instance.zone);
+        assertEquals("March 31st,2018 saturday at 18:00",instance.returnDateTime(localDate, 3));
+        localDate = ZonedDateTime.of(LocalDate.of(2016,8,29), LocalTime.of(13, 00),instance.zone);
+        assertEquals("2016-08-29 monday 13:00 in America/Chicago",instance.returnDateTime(localDate, 4));
         
-        
-        
-        
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -149,15 +148,17 @@ public class DateTimeWizardTest {
         System.out.println("getDate");
         DateTimeWizard instance = new DateTimeWizard();
         LocalDate expResult = null;
-        LocalDate result = instance.getDate();
-        assertEquals(expResult, result);
         
         expResult = LocalDate.now();
         instance.setDate(expResult.getDayOfMonth(), expResult.getMonthValue(),expResult.getYear());
         
         assertEquals(LocalDate.now(),instance.getDate());
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        instance.setDate(26, 12,2017);
+        assertEquals(LocalDate.of(2017,12,26),instance.getDate());
+        instance.setDate(15, 8,2020);
+        assertEquals(LocalDate.of(2020,8,15),instance.getDate());
+        
     }
 
     
@@ -168,14 +169,12 @@ public class DateTimeWizardTest {
     @Test
     public void testGetTime() {
         System.out.println("getTime");
-        ZonedDateTime localDate = null;
+        
         DateTimeWizard instance = new DateTimeWizard();
-        Integer[] expResult = null;
-        Integer[] result = instance.getTime(localDate);
-        assertArrayEquals(expResult, result);
-        assertArrayEquals(new Integer[]{11,28}, instance.getTime(ZonedDateTime.of(LocalDate.of(2022,5,8), LocalTime.of(11, 28), instance.zone)));
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertArrayEquals(new Integer[]{11,28},instance.getTime(ZonedDateTime.of(LocalDate.of(2022,5,8), LocalTime.of(11, 28), instance.zone)));
+        assertArrayEquals(new Integer[]{23,59},instance.getTime(ZonedDateTime.of(LocalDate.of(2022,4,22), LocalTime.of(23, 59), instance.zone)));
+        assertArrayEquals(new Integer[]{5,29},instance.getTime(ZonedDateTime.of(LocalDate.of(2018,4,12), LocalTime.of(5, 29), instance.zone)));
+        
     }
 
     /**
@@ -184,16 +183,13 @@ public class DateTimeWizardTest {
     @Test
     public void testGetDayOfWeek() {
         System.out.println("getDayOfWeek");
-        ZonedDateTime localDate = null;
+        
         DateTimeWizard instance = new DateTimeWizard();
-        DayOfWeek expResult = null;
-        DayOfWeek result = instance.getDayOfWeek(localDate);
-        assertEquals(expResult, result);
-        assertEquals("sunday",instance.getDayOfWeek(ZonedDateTime.of(LocalDate.of(2022,5,8), LocalTime.of(12, 0), instance.zone)));
-        assertEquals("wednesday",instance.getDayOfWeek(ZonedDateTime.of(LocalDate.of(2022,3,9), LocalTime.of(12, 10), instance.zone)));
-        assertEquals("monday",instance.getDayOfWeek(ZonedDateTime.of(LocalDate.of(2022,5,30), LocalTime.of(12, 0), instance.zone)));         
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        assertEquals(DayOfWeek.SUNDAY,instance.getDayOfWeek(ZonedDateTime.of(LocalDate.of(2022,5,8), LocalTime.of(12, 0), instance.zone)));
+        assertEquals(DayOfWeek.WEDNESDAY,instance.getDayOfWeek(ZonedDateTime.of(LocalDate.of(2022,3,9), LocalTime.of(12, 10), instance.zone)));
+        assertEquals(DayOfWeek.MONDAY,instance.getDayOfWeek(ZonedDateTime.of(LocalDate.of(2022,5,30), LocalTime.of(12, 0), instance.zone)));          
+        
     }
 
     /**
@@ -209,10 +205,9 @@ public class DateTimeWizardTest {
         
         assertEquals(expResult, result);
         assertEquals("10:55",instance.getClockTime(new Integer[]{10,55}));
-        assertEquals("3:45",instance.getClockTime(new Integer[]{3,45}));
-        assertEquals("19:20",instance.getClockTime(new Integer[]{19,20}));
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals("03:45",instance.getClockTime(new Integer[]{3,45}));
+        assertEquals("19:00",instance.getClockTime(new Integer[]{19,0}));
+        
     }
     /**
      * Test of main method, of class DateTimeWizard.
@@ -250,8 +245,7 @@ public class DateTimeWizardTest {
         String expResult = "America/Chicago";
         String result = instance.getTimeZone();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -262,10 +256,14 @@ public class DateTimeWizardTest {
         System.out.println("getDSTdates");
         DateTimeWizard instance = new DateTimeWizard();
         LocalDate[] expResult = null;
-        LocalDate[] result = instance.getDSTdates();
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        expResult = new LocalDate[]{LocalDate.of(2018, Month.MARCH, 11),LocalDate.of(2018, Month.NOVEMBER, 4)};
+        instance.setDSTdates(LocalDate.of(2018,3,11), LocalDate.of(2018,11,4));
+        assertArrayEquals(expResult, instance.getDSTdates());
+        expResult = new LocalDate[]{LocalDate.of(2016, Month.MARCH, 13),LocalDate.of(2018, Month.NOVEMBER, 6)};
+        instance.setDSTdates(LocalDate.of(2016,3,11), LocalDate.of(2016,11,6));
+        assertArrayEquals(expResult, instance.getDSTdates());
+        
     }
     
 }
