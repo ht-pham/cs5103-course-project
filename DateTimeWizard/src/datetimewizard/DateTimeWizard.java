@@ -166,7 +166,7 @@ public class DateTimeWizard {
         }
         String dateString = localDate.toLocalDate().toString();
         
-        DayOfWeek dayOfWeek = localDate.getDayOfWeek();
+        DayOfWeek dayOfWeek = localDate.getDayOfWeek().toLowerCase();
         String weekDay = dayOfWeek.toString();
         
         Integer[] timeClock= this.getTime(localDate);
