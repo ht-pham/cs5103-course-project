@@ -45,7 +45,19 @@
     <li> private ZoneId zone</li>
     <li> private LocalDate date</li>
     <li> private LocalTime time</li>
-    <li> DayOfWeek dayOfWeek: local variable in returnDate() function</li>
+  </ol>
+  
+  The DateTimeWizard class is built with basic behaviors: 
+  <ol>
+    <li> Setters: setDate() -> void, setTime() -> void, setTimeZone() -> void: to change the current time zone to another one</li>
+    <li> Getters: getStringMonth() -> String, getFormalDay() -> String, getDate() -> LocalDate, getTime() -> Integer[], getClockTime() ->String, getDayOfWeek() -> DayOfWeek </li>
+    <li> Others: returnDateTime() -> String: to return date & time in a timezone </li>
+  </ol>
+  <b>How the system was built to make requirements</b>
+  <ol>
+    <li> Requirement 1 - Change the timezone: setTimeZone(ZoneId zone) was built to change the current timezone to new one by the param 'zone'</li>
+    <li> Requirement 2 - Add DST info: in main function. </li>
+    <li> Requirement 3 - Display Day of Week: getDayOfWeek(ZonedDateTime localDate)</li>
   </ol>
 </div>
 
