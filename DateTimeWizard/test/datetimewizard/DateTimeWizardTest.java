@@ -145,13 +145,20 @@ public class DateTimeWizardTest {
      */
     @Test
     public void testGetDate() {
+        
         System.out.println("getDate");
         DateTimeWizard instance = new DateTimeWizard();
         LocalDate expResult = null;
         LocalDate result = instance.getDate();
         assertEquals(expResult, result);
+        
+        expResult = LocalDate.now();
+        instance.setDate(expResult.getDayOfMonth(), expResult.getMonthValue(),expResult.getYear());
+        
+        assertEquals(LocalDate.now(),instance.getDate());
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
+        
     }
 
     /**
