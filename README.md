@@ -30,7 +30,7 @@
   
 ### Requirements
 
-  The initial requirement is to transform it to any different time zone. The secondary requirement is to add Daytime light Savings' start date and end date for all regions with an assumption that all regions start and end Daylight Time Savings. 
+  The initial requirement is to transform it to any different time zone. The secondary requirement is to add Daytime light Savings' start date and end date for all regions with an assumption that all regions start and end Daylight Time Savings. The third requirement is to have Day of Week (Sunday, Monday, Tuesday, etc.) shown on the output.
   <br>
 
 <div>
@@ -45,5 +45,7 @@
     <li> private ZoneId zone</li>
     <li> private LocalDate date</li>
     <li> private LocalTime time</li>
+    <li> DayOfWeek dayOfWeek: local variable in returnDate() function</li>
   </ol>
 </div>
+
