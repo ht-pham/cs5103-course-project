@@ -46,3 +46,10 @@
   <i>April 7th, 2022</i>
   <div>Added GUI to the project. The current idea is to display the date time based on the selection of the user from console.</div>
 
+  <i>April 20th, 2022</i>
+  <div>Removed the GUI change and reverted the changes back to the timeline before April 7th, 2022</div>
+  <i>May 6th, 2022</i>
+  <div>Added Day of Week info in the returnDateTime() function.</div>
+  <i>May 8th, 2022</i>
+  <div>Added unit tests for DateTimeWizard.</div>
+  
